@@ -8,6 +8,8 @@ COPY build/libs/resources /app/resources
 
 VOLUME /cache
 
+EXPOSE 8080
+
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
 RUN export DEBIAN_FRONTEND=noninteractive
