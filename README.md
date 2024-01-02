@@ -18,3 +18,17 @@ SOUL Essent is a multilingual environment that uses adapters to run the daemon i
 - Essent **does not store any information**, either anonymous or in original form.
 - Essent is a **standalone product** and can be separated from the SOUL infrastructure without using emulation of missing models
 - Essent and all forks are distributed exclusively **under the MIT license**. All products within SOUL Essent also use open licenses (not limited to MIT)
+
+
+### Get started
+```shell
+java --version # openjdk 18.0.2-ea 2022-07-19
+```
+
+```shell
+git clone https://github.com/soul-guru/soul-essent
+cd cd soul-essent
+sh gradlew buildShadow
+
+docker build -f Dockerfile -t soul/essent:latest .
+```

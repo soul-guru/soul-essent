@@ -33,6 +33,7 @@ import kotlin.time.DurationUnit
  */
 class TensorTransforms {
 	companion object {
+		private val pythonBin = System.getenv().getOrDefault("PYTHON_BIN", "python3")
 		private val logger = LoggerFactory.getLogger(TensorTransforms::class.java)
 
 		private val filePaths by lazy {
@@ -144,7 +145,7 @@ class TensorTransforms {
 				if (requirementsFile.exists()) {
 					requirementsFile.readLines(Charset.forName("UTF-8"))
 						.forEach {
-							execCmd("python3 -m pip install $it")
+							execCmd("$pythonBin -m pip install $it")
 							logger.info("+ $it installed...")
 						}
 				} else {
@@ -171,7 +172,7 @@ class TensorTransforms {
 				val modelFetcherScript = File(requireNotNull(pathToModelFetcher))
 
 				// Create a ProcessBuilder for executing the Python script
-				val pb = ProcessBuilder("python3", modelFetcherScript.absolutePath).inheritIO()
+				val pb = ProcessBuilder(pythonBin, modelFetcherScript.absolutePath).inheritIO()
 
 				// Set environment variables for Hugging Face Hub cache, Transformers cache, and HF_HOME
 				val environment = pb.environment()
@@ -227,7 +228,7 @@ class TensorTransforms {
 
 		// Step 2: Obtain the Python file and create a ProcessBuilder
 		val pythonFile = File(requireNotNull(pathToPythonFile))
-		val processBuilder = ProcessBuilder("python3", pythonFile.absolutePath).apply {
+		val processBuilder = ProcessBuilder(pythonBin, pythonFile.absolutePath).apply {
 			directory(pythonFile.parentFile)
 			environment().apply {
 				// Step 3: Configure the process with necessary environment variables

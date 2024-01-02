@@ -1,7 +1,5 @@
+
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.Path
 import kotlin.io.path.copyToRecursively
@@ -11,8 +9,8 @@ val kotlin_version: String by project
 
 plugins {
 	kotlin("jvm") version "1.9.22"
-	id("com.github.johnrengelman.shadow") version "8.1.1"
 
+	id("com.github.johnrengelman.shadow") version "8.1.1"
 	id("io.ktor.plugin") version "2.3.7"
 }
 

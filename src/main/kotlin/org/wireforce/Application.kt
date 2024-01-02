@@ -21,6 +21,7 @@ fun main(args: Array<String>) {
 	val env = System.getenv()
 
 	val mapOfEnvKeys = listOf(
+		"PYTHON_BIN" to "",
 		"PYTHON_DAEMON_WORKERS" to "",
 
 		"TENSOR_PYTHON_HOST" to "",
