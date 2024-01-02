@@ -1,0 +1,11 @@
+[package]
+name = "rust-soul-toolkit"
+version = "1.0.0"
+authors = ["wireforce"]
+autobins = false
+
+[dependencies]
+tfidf-text-summarizer = "0.0.1"
+
+[lib]
+path ="src/main.rs"
