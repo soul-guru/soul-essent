@@ -24,7 +24,11 @@ fun Application.configureRoutingApplications() {
 
 			val call = { call: ApplicationCall ->
 				suspend {
-					val videoId = call.receive<Map<String, Any>>()["videoId"].toString()
+					val body = call.receive<Map<String, Any>>()
+					val videoId = body["videoId"].toString()
+
+					// @remove
+					println(body)
 
 					// Execute YTCC snippet with the provided 'id' parameter
 					YTCC(videoId).execute(call)
