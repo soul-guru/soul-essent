@@ -42,3 +42,5 @@ hfc
 python-domain.host
 python.pid
 build
+
+src/main/resources/rust/target/
