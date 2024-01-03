@@ -2,6 +2,7 @@ package org.wireforce.plugins
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.wireforce.dto.KtorTaskValue
@@ -19,12 +20,14 @@ fun Application.configureRoutingApplications() {
 	// Define snippets with associated parameters and execution logic
 	val snippets = mapOf(
 		"ytcc" to object {
-			val parameters = listOf("id")
+			val bodyWait = mapOf("videoId" to String)
 
 			val call = { call: ApplicationCall ->
 				suspend {
+					val videoId = call.receive<Map<String, Any>>()["videoId"].toString()
+
 					// Execute YTCC snippet with the provided 'id' parameter
-					YTCC(call.parameters["id"]!!).execute(call)
+					YTCC(videoId).execute(call)
 				}
 			}
 		}
