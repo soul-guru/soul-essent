@@ -27,6 +27,7 @@ preload_models = [
     ("summarization", "Falconsai/text_summarization"),
     ("text-classification", "mohameddhiab/humor-no-humor"),
     ("text-classification", "SamLowe/roberta-base-go_emotions"),
+    ("text-classification", "bhadresh-savani/distilbert-base-uncased-emotion"),
     ("text-classification", "Falconsai/offensive_speech_detection"),
     ("text-classification", "helinivan/english-sarcasm-detector"),
     ("sentiment-analysis", "michellejieli/emotion_text_classifier"),
