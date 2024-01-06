@@ -1,4 +1,4 @@
-`package org.wireforce.plugins
+package org.wireforce.plugins
 
 import io.ktor.http.*
 import io.ktor.server.application.*
