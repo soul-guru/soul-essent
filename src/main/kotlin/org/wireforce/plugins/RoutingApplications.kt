@@ -1,4 +1,4 @@
-package org.wireforce.plugins
+`package org.wireforce.plugins
 
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -6,6 +6,8 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.wireforce.dto.KtorTaskValue
+import org.wireforce.interfaces.SnippetRouterAdapter
+import org.wireforce.snippets.Prism1
 import org.wireforce.snippets.YTCC
 
 /**
@@ -19,20 +21,31 @@ import org.wireforce.snippets.YTCC
 fun Application.configureRoutingApplications() {
 	// Define snippets with associated parameters and execution logic
 	val snippets = mapOf(
-		"ytcc" to object {
-			val bodyWait = mapOf("videoId" to String)
+		"ytcc" to object : SnippetRouterAdapter<Map<String, Any?>> {
+			override val description: String
+				get() = "YTCC - a system for translating YouTube videos into its text" +
+						"description and basic classification"
 
-			val call = { call: ApplicationCall ->
-				suspend {
-					val body = call.receive<Map<String, Any>>()
-					val videoId = body["videoId"].toString()
+			override suspend fun call(call: ApplicationCall): KtorTaskValue<Map<String, Any?>> {
+				val body = call.receive<Map<String, Any>>()
+				val videoId = body["videoId"].toString()
 
-					// @remove
-					println(body)
+				// Execute YTCC snippet with the provided 'id' parameter
+				return YTCC(videoId).execute(call)
+			}
+		},
 
-					// Execute YTCC snippet with the provided 'id' parameter
-					YTCC(videoId).execute(call)
-				}
+		"prism1" to object : SnippetRouterAdapter<Map<String, Any?>> {
+			override val description: String
+				get() = "Prism1 is a snippet for splitting a user message into the necessary characteristics for its complex classification." +
+						"The name itself - Prism1 itself declares the possibility of the existence of other presets of the Prism version," +
+						"such as Prism2, Prism3, etc. They are independent and can even be created by different authors"
+
+			override suspend fun call(call: ApplicationCall): KtorTaskValue<Map<String, Any?>> {
+				val body = call.receive<Map<String, String>>()
+				val message = body.getOrDefault("message", "")
+
+				return Prism1(message).execute(call)
 			}
 		}
 	)
@@ -66,7 +79,7 @@ fun Application.configureRoutingApplications() {
 			}
 
 			// Invoke the execution logic of the specified snippet
-			val applicationExecution = snippets[appId]?.call?.invoke(call)?.invoke()
+			val applicationExecution = snippets[appId]?.call(call)
 
 			// Respond with the result of the snippet execution
 			call.respond(
